@@ -1,9 +1,10 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
+	"hackathon/config"
 	"hackathon/controller"
 	"hackathon/middleware"
 )
@@ -12,11 +13,7 @@ func Init() {
 	r := gin.Default()
 	r.Use(cors.Default())
 	r = CollectRoute(r)
-	port := viper.GetString("server.port")
-	if port != "" {
-		panic(r.Run(":" + port))
-	}
-	panic(r.Run())
+	panic(r.Run(fmt.Sprintf(":%d", config.Conf.Port)))
 }
 
 func CollectRoute(r *gin.Engine) *gin.Engine {
