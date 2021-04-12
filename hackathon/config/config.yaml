@@ -1,4 +1,4 @@
-name: "web_app"
+name: "UShare"
 mode: "dev"
 port: 8081
 mysql:
@@ -12,6 +12,12 @@ redis:
   port: 6379
   db: 0
   password: ""
+sms:
+  sign_name: "UShare"
+  template_code: "SMS_"
+  access_key: ""
+  access_secret: ""
+  region_area: "cn-hangzhou"
 #log:
 #  level: "debug"
 #  filename: "web_qpp.log"

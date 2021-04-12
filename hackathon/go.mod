@@ -3,6 +3,7 @@ module hackathon
 go 1.15
 
 require (
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1022
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-contrib/cors v1.3.1

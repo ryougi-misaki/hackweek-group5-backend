@@ -16,6 +16,7 @@ type AppConfig struct {
 
 	*MySQLConfig `mapstructure:"mysql"`
 	*RedisConfig `mapstructure:"redis"`
+	*SmsConfig   `mapstructure:"sms"`
 }
 
 type MySQLConfig struct {
@@ -35,6 +36,14 @@ type RedisConfig struct {
 	DB           int    `mapstructure:"db"`
 	PoolSize     int    `mapstructure:"pool_size"`
 	MinIdleConns int    `mapstructure:"min_idle_conns"`
+}
+
+type SmsConfig struct {
+	SignName     string `mapstructure:"sign_name"`
+	TemplateCode string `mapstructure:"template_code"`
+	AccessKey    string `mapstructure:"access_key"`
+	AccessSecret string `mapstructure:"access_secret"`
+	RegionArea   string `mapstructure:"region_area"`
 }
 
 func Init() (err error) {

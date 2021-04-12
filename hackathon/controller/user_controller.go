@@ -47,3 +47,17 @@ func Info(ctx *gin.Context) {
 	//ctx.JSON(http.StatusOK,gin.H{"code":200,"data":gin.H{"user":dto.ToUserDto(user.(model.User))}})
 	fmt.Println(user)
 }
+
+func SendCode(ctx *gin.Context) {
+	telephone := ctx.PostForm("telephone")
+	if len(telephone) != 11 {
+		response.Fail(ctx, nil, response.GetErrMsg(response.CodePhoneLength))
+		return
+	}
+	ok := service.SendSmsCode(telephone)
+	if !ok {
+		response.Response(ctx, http.StatusOK, response.Error, nil, "发送验证码失败")
+		return
+	}
+	response.Success(ctx, nil, "发送成功")
+}
