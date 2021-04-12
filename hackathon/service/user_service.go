@@ -34,6 +34,18 @@ func Register(p *models.ParamRegister) int {
 	if p.Code != smsCode.Code {
 		return 1
 	}
+	//code := ""
+	//err := redis.CacheDelData("phone:",p.Telephone)
+	//if err != nil {
+	//	return 1
+	//}
+	//err = redis.CacheGetData("phone:",p.Telephone,&code)
+	//if err != nil {
+	//	return 1
+	//}
+	//if p.Code != code {
+	//	return 1
+	//}
 	//创建用户
 	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(p.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -100,6 +112,7 @@ func SendSmsCode(phone string) bool {
 			Code:  code,
 		}
 		err := mysql.Create(smsCode)
+		//err = redis.CacheSetData("phone:",phone,code,time.Minute*5)
 		if err != nil {
 			return false
 		}
