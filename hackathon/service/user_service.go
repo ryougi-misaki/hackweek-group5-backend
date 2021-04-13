@@ -7,6 +7,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"hackathon/config"
 	"hackathon/dao/mysql"
+	"hackathon/dao/redis"
 	"hackathon/models"
 	"hackathon/response"
 	"hackathon/util"
@@ -29,27 +30,26 @@ func Register(p *models.ParamRegister) int {
 	if mysql.IsTelephoneExist(DB, p.Telephone) {
 		return response.CodePhoneExist
 	}
-	var smsCode models.SmsCode
-	mysql.RetrieveByStruct(&smsCode, p.Telephone)
-	if p.Code != smsCode.Code {
+	//var smsCode models.SmsCode
+	//mysql.RetrieveByStruct(&smsCode, p.Telephone)
+	//if p.Code != smsCode.Code {
+	//	return 1
+	//}
+	code := ""
+	err := redis.CacheGetData("phone:", p.Telephone, &code)
+	if err != nil {
 		return 1
 	}
-	//code := ""
-	//err := redis.CacheDelData("phone:",p.Telephone)
-	//if err != nil {
-	//	return 1
-	//}
-	//err = redis.CacheGetData("phone:",p.Telephone,&code)
-	//if err != nil {
-	//	return 1
-	//}
-	//if p.Code != code {
-	//	return 1
-	//}
+	if p.Code != code {
+		return 1
+	}
+	err = redis.CacheDelData("phone:", p.Telephone)
+	if err != nil {
+		return 1
+	}
 	//创建用户
 	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(p.Password), bcrypt.DefaultCost)
 	if err != nil {
-		//response.Response(ctx,http.StatusUnprocessableEntity,422,nil,"加密错误")
 		return response.CodeEncryptError
 	}
 	newUser := &models.User{
@@ -106,17 +106,48 @@ func SendSmsCode(phone string) bool {
 	fmt.Printf("response is %#v\n", response)
 	if response.Code == "OK" {
 		//将验证码保存到数据库中
-		smsCode := &models.SmsCode{
-			Phone: phone,
-			BizId: response.BizId,
-			Code:  code,
-		}
-		err := mysql.Create(smsCode)
-		//err = redis.CacheSetData("phone:",phone,code,time.Minute*5)
+		//smsCode := &models.SmsCode{
+		//	Phone: phone,
+		//	BizId: response.BizId,
+		//	Code:  code,
+		//}
+		//err := mysql.Create(smsCode)
+		err = redis.CacheSetData("phone:", phone, code, time.Minute*5)
 		if err != nil {
 			return false
 		}
 		return true
 	}
 	return false
+}
+
+func ChangePwd(p *models.ParamChangePwd) int {
+	DB := mysql.GetDB()
+	var user models.User
+	DB.Where("telephone = ?", p.Telephone).First(&user)
+	if user.ID == 0 {
+		return response.CodeUserNotExist
+	}
+	code := ""
+	err := redis.CacheGetData("phone:", p.Telephone, &code)
+	if err != nil {
+		return response.Error
+	}
+	if p.Code != code {
+		return response.Error
+	}
+	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(p.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return response.CodeEncryptError
+	}
+	tarData := &models.User{}
+	tarData.Telephone = p.Telephone
+	updateData := &models.User{
+		Password: string(hasedPassword),
+	}
+	err = mysql.Update(tarData, updateData)
+	if err != nil {
+		return response.Error
+	}
+	return 0
 }

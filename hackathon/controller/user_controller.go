@@ -61,3 +61,18 @@ func SendCode(ctx *gin.Context) {
 	}
 	response.Success(ctx, nil, "发送成功")
 }
+
+func ChangePwd(ctx *gin.Context) {
+	p := new(models.ParamChangePwd)
+	if err := ctx.ShouldBind(p); err != nil {
+		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
+		return
+	}
+	//数据验证
+	code := service.ChangePwd(p)
+	if code != 0 {
+		response.Response(ctx, http.StatusOK, code, nil, response.GetErrMsg(code))
+		return
+	}
+	response.Success(ctx, nil, "注册成功")
+}

@@ -12,3 +12,9 @@ type ParamLogin struct {
 	Telephone string `json:"telephone" form:"telephone" binding:"required"`
 	Password  string `json:"password" form:"password" binding:"required"`
 }
+
+type ParamChangePwd struct {
+	Telephone string `json:"telephone" form:"telephone" binding:"required"`
+	Password  string `json:"password" form:"password" binding:"required"`
+	Code      string `json:"code" form:"code" binding:"required"`
+}
