@@ -5,8 +5,14 @@ import (
 	"net/http"
 )
 
+type ResponseData struct {
+	Code int         `json:"code"` // 业务响应状态码
+	Msg  interface{} `json:"msg"`  // 提示信息
+	Data interface{} `json:"data"` // 数据
+}
+
 const (
-	CodePhoneLength = 1000 + iota
+	CodePhoneLength int = 1000 + iota
 	CodeParamError
 	CodePwdLength
 	CodePhoneExist

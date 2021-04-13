@@ -85,3 +85,23 @@ func EditInfo(p *models.ParamEditInfo, id uint) int {
 	}
 	return response.OK
 }
+
+func ChangePwd(p *models.ParamChangePwd, id uint) int {
+	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(p.NewPassword), bcrypt.DefaultCost)
+	if err != nil {
+		//response.Response(ctx,http.StatusUnprocessableEntity,422,nil,"加密错误")
+		return response.CodeEncryptError
+	}
+
+	tarData := &models.User{}
+	tarData.ID = id
+	updateData := &models.User{
+		Password: string(hasedPassword),
+	}
+	err = mysql.Update(tarData, updateData)
+	if err != nil {
+		fmt.Println(err)
+		return response.CodeServerBusy
+	}
+	return response.OK
+}

@@ -1,21 +1,29 @@
 package models
 
+// ParamRegister 获取注册请求multipart/form-data 参数
 type ParamRegister struct {
-	Name      string `json:"name" form:"name"`
-	Telephone string `json:"telephone" form:"telephone" binding:"required"`
-	Password  string `json:"password" form:"password" binding:"required"`
+	Name      string `json:"name" form:"name"`                              //可以为空
+	Telephone string `json:"telephone" form:"telephone" binding:"required"` //手机号
+	Password  string `json:"password" form:"password" binding:"required"`   //密码
 }
 
-// ParamLogin 登录请求参数
+// ParamLogin 获取登录请求multipart/form-data参数
 type ParamLogin struct {
-	Telephone string `json:"telephone" form:"telephone" binding:"required"`
-	Password  string `json:"password" form:"password" binding:"required"`
+	Telephone string `json:"telephone" form:"telephone" binding:"required"` //手机号
+	Password  string `json:"password" form:"password" binding:"required"`   //密码
 }
 
+// ParamEditInfo 获取编辑用户信息请求multipart/form-data参数
 type ParamEditInfo struct {
-	Name        string `json:"name" form:"name" binding:"required"`
-	Icon        string `json:"icon" form:"icon" binding:"required"`
-	Description string `json:"description" form:"description"`
-	Gender      string `json:"gender" form:"gender"`
-	Birth       string `json:"birth" form:"birth"`
+	Name        string `json:"name" form:"name" binding:"required" example:"shiki"` //名称
+	Icon        string `json:"icon" form:"icon" binding:"required" example:"1.png"` //头像url
+	Description string `json:"description" form:"description" example:"这是一个介绍"`     //简介
+	Gender      string `json:"gender" form:"gender" example:"男"`                    //性别
+	Birth       string `json:"birth" form:"birth" example:"20000101"`               //生日
+}
+
+// ParamChangePwd 获取编辑用户信息请求multipart/form-data参数
+type ParamChangePwd struct {
+	Password    string `json:"password" form:"password" binding:"required"`         //原密码
+	NewPassword string `json:"new_password" form:"new_password" binding:"required"` //新密码
 }
