@@ -14,15 +14,23 @@ type User struct {
 }
 
 type UserDto struct {
-	Id        uint   `json:"id"`
-	Name      string `json:"name"`
-	Telephone string `json:"telephone"`
+	Id          uint   `json:"id"`
+	Name        string `json:"name"`
+	Telephone   string `json:"telephone"`
+	Icon        string `json:"icon"`
+	Description string `json:"description"`
+	Gender      string `json:"gender"`
+	Birth       string `json:"birth"`
 }
 
 func ToUserDto(user User) UserDto {
 	return UserDto{
-		Id:        user.ID,
-		Name:      user.Name,
-		Telephone: user.Telephone,
+		Id:          user.ID,
+		Name:        user.Name,
+		Telephone:   user.Telephone,
+		Icon:        user.Icon,
+		Description: user.Description,
+		Gender:      user.Gender,
+		Birth:       user.Birth,
 	}
 }
