@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"hackathon/dao/mysql"
 	"hackathon/models"
@@ -53,8 +54,7 @@ func Login(p *models.ParamLogin) (string, int) {
 	var user models.User
 	DB.Where("telephone = ?", p.Telephone).First(&user)
 	if user.ID == 0 {
-
-		return "", response.CodePhoneExist
+		return "", response.CodeUserNotExist
 	}
 	//判断密码是否正确
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(p.Password)); err != nil {
@@ -66,4 +66,22 @@ func Login(p *models.ParamLogin) (string, int) {
 		return "", response.Error
 	}
 	return token, response.OK
+}
+
+func EditInfo(p *models.ParamEditInfo, id uint) int {
+	tarData := &models.User{}
+	tarData.ID = id
+	updateData := &models.User{
+		Name:        p.Name,
+		Icon:        p.Icon,
+		Description: p.Description,
+		Gender:      p.Gender,
+		Birth:       p.Birth,
+	}
+	err := mysql.Update(tarData, updateData)
+	if err != nil {
+		fmt.Println(err)
+		return response.CodeServerBusy
+	}
+	return response.OK
 }

@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"hackathon/models"
 	"hackathon/response"
@@ -44,6 +43,20 @@ func Login(ctx *gin.Context) {
 
 func Info(ctx *gin.Context) {
 	user, _ := ctx.Get("user")
-	//ctx.JSON(http.StatusOK,gin.H{"code":200,"data":gin.H{"user":dto.ToUserDto(user.(model.User))}})
-	fmt.Println(user)
+	ctx.JSON(http.StatusOK, gin.H{"code": 200, "data": gin.H{"user": models.ToUserDto(user.(models.User))}})
+}
+
+func EditInfo(ctx *gin.Context) {
+	p := new(models.ParamEditInfo)
+	if err := ctx.ShouldBind(p); err != nil {
+		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
+		return
+	}
+	user, _ := ctx.Get("user")
+	code := service.EditInfo(p, user.(models.User).ID)
+	if code != 0 {
+		response.Response(ctx, http.StatusOK, code, nil, response.GetErrMsg(code))
+		return
+	}
+	response.Success(ctx, gin.H{"data": p}, "修改成功")
 }
