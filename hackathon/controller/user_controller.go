@@ -2,10 +2,12 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"hackathon/dao/mysql"
 	"hackathon/models"
 	"hackathon/response"
 	"hackathon/service"
 	"net/http"
+	"strconv"
 )
 
 func Register(ctx *gin.Context) {
@@ -42,8 +44,10 @@ func Login(ctx *gin.Context) {
 }
 
 func Info(ctx *gin.Context) {
-	user, _ := ctx.Get("user")
-	ctx.JSON(http.StatusOK, gin.H{"code": 200, "data": gin.H{"user": models.ToUserDto(user.(models.User))}})
+	id, _ := strconv.Atoi(ctx.Param("id"))
+	var user models.User
+	mysql.RetrieveByID(&user, uint(id))
+	ctx.JSON(http.StatusOK, gin.H{"code": 200, "data": gin.H{"user": models.ToUserDto(user)}})
 }
 
 func EditInfo(ctx *gin.Context) {
