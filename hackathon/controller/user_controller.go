@@ -75,7 +75,7 @@ func Info(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
 	var user models.User
 	mysql.RetrieveByID(&user, uint(id))
-	response.Success(ctx, gin.H{"code": 200, "data": gin.H{"user": models.ToUserDto(user)}}, "查询成功")
+	response.Success(ctx, gin.H{"user": models.ToUserDto(user)}, "查询成功")
 }
 
 // EditInfo 编辑用户信息接口

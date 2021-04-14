@@ -1,6 +1,8 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type User struct {
 	gorm.Model
@@ -11,6 +13,7 @@ type User struct {
 	Description string `gorm:"varchar(200)"`
 	Gender      string `gorm:"varchar(2)"`
 	Birth       string `gorm:"varchar(10)"`
+	Role        int    `gorm:"type:int"` //默认为0，为1时是admin（后期风控补充）
 }
 
 type UserDto struct {

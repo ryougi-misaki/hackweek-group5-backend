@@ -27,3 +27,14 @@ type ParamChangePwd struct {
 	Password    string `json:"password" form:"password" binding:"required"`         //原密码
 	NewPassword string `json:"new_password" form:"new_password" binding:"required"` //新密码
 }
+
+type ParamCreateTag struct {
+	Name        string `json:"name" form:"name" binding:"required" example:"百年校区祝福"` //名称
+	Description string `json:"description" form:"description" example:"介绍"`          //简介
+}
+
+type ParamCreatePost struct {
+	TagId   int    `json:"tag_id" form:"tag_id" binding:"required"`
+	Title   string `json:"title" form:"title" binding:"required"`
+	Content string `json:"content" form:"content" binding:"required"`
+}

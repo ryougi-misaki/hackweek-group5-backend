@@ -64,6 +64,6 @@ func Init() (err error) {
 
 func ReturnMySQLsetting(cfg *MySQLConfig) string {
 	// "user:password@tcp(host:port)/dbname"
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true&loc=Local", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=true&loc=Local", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
 	return dsn
 }
