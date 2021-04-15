@@ -1,4 +1,5 @@
 package core
+
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -17,11 +18,28 @@ type Client struct {
 	ReadDeadline       time.Duration
 	WriteDeadline      time.Duration
 	HeartbeatFailTimes int
+	// 自己的地址
+	ID interface{}
+	//用户的id
+	Uid int
+	//目标id
+	To int
 }
 
 // 处理握手+协议升级
 func (c *Client) OnOpen(context *gin.Context) (*Client, bool) {
 	// 1.升级连接,从http--->websocket
+	defer func() {
+		err := recover()
+		if err != nil {
+
+			if val, ok := err.(error); ok {
+				fmt.Println(val)
+			}
+
+		}
+	}()
+
 	fmt.Println("third")
 	var upGrader = websocket.Upgrader{
 		ReadBufferSize:  2000,
@@ -45,6 +63,9 @@ func (c *Client) OnOpen(context *gin.Context) (*Client, bool) {
 		c.PingPeriod = time.Second * 30
 		c.ReadDeadline = time.Second * 0
 		c.WriteDeadline = time.Second * 35
+		c.ID = c
+		c.Uid = variable.TempId
+		variable.TempId++
 		if err := c.Conn.SetWriteDeadline(time.Now().Add(2 * time.Second)); err != nil {
 			log.Fatal(err.Error())
 		}
@@ -53,7 +74,7 @@ func (c *Client) OnOpen(context *gin.Context) (*Client, bool) {
 		}
 		c.Conn.SetReadLimit(65535) // 设置最大读取长度
 		fmt.Println(6)
-		c.Hub.Register <- c //定位到问题
+		c.Hub.Register <- c
 		fmt.Println(7)
 		return c, true
 	}
@@ -67,7 +88,7 @@ func (c *Client) ReadPump(callbackOnMessage func(messageType int, receivedData [
 		err := recover()
 		if err != nil {
 			if realErr, isOk := err.(error); isOk {
-				log.Fatal(realErr.Error())
+				panic(realErr)
 			}
 		}
 		callbackOnClose()
@@ -78,12 +99,12 @@ func (c *Client) ReadPump(callbackOnMessage func(messageType int, receivedData [
 		mt, bReceivedData, err := c.Conn.ReadMessage()
 		if err == nil {
 			if err := c.Conn.SetWriteDeadline(time.Now().Add(c.WriteDeadline)); err != nil {
-				log.Fatal(err.Error())
+				panic(err)
 			}
 			callbackOnMessage(mt, bReceivedData)
 		} else {
 			// OnError事件
-			callbackOnError(err)
+			//callbackOnError(err)
 			break
 		}
 	}
@@ -97,7 +118,7 @@ func (c *Client) Heartbeat(callbackClose func()) {
 		err := recover()
 		if err != nil {
 			if val, ok := err.(error); ok {
-				log.Fatal(val.Error())
+				panic(val)
 			}
 		}
 		ticker.Stop()   // 停止该client的心跳检测
@@ -124,7 +145,7 @@ func (c *Client) Heartbeat(callbackClose func()) {
 			if err := c.Conn.WriteMessage(websocket.PingMessage, []byte(variable.WebsocketServerPingMsg)); err != nil {
 				c.HeartbeatFailTimes++
 				if c.HeartbeatFailTimes > 4 {
-					log.Fatal(err.Error())
+					callbackClose()
 					return
 				}
 			} else {

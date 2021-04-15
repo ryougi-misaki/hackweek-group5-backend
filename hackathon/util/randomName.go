@@ -16,3 +16,4 @@ func RandomString(n int) string {
 
 	return string(result)
 }
+

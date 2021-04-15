@@ -8,14 +8,17 @@ import (
 
 func WebSocket(ctx *gin.Context) {
 
+	fmt.Println("haha1")
 	WS := new(websocket.Ws)
 
 	fmt.Println("haha")
 
 	cli,_ := WS.OnOpen(ctx)
 
-	fmt.Println("1:",cli ,"2:", cli.WsClient)
-
 	cli.OnMessage(ctx)
+
+	//cli.BroadcastMsg("新成员加入")
+
+	cli.GetOnlineClients()
 
 }

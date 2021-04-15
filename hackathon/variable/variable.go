@@ -7,4 +7,6 @@ var (
 	WebsocketHandshakeSuccess = "Websocket Handshake+OnOpen Success"
 	WebsocketServerPingMsg    = "Server->Ping->Client"
 
+	TempId = 0
+
 )

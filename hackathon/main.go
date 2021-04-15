@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"hackathon/config"
-	"hackathon/routes"
 	"hackathon/core"
+	"hackathon/routes"
 	"hackathon/variable"
 )
 
@@ -25,8 +25,12 @@ func main() {
 	//	return
 	//}
 	//defer redis.Close()
-	variable.WebsocketHub = core.CreateHubFactory()
 
+	hub := core.CreateHubFactory()
+
+	go hub.Run()
+
+	variable.WebsocketHub = hub
 
 	routes.Init()
 }
