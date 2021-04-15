@@ -28,13 +28,15 @@ type ParamChangePwd struct {
 	NewPassword string `json:"new_password" form:"new_password" binding:"required"` //新密码
 }
 
+// ParamCreateTag 创建版块请求multipart/form-data参数
 type ParamCreateTag struct {
 	Name        string `json:"name" form:"name" binding:"required" example:"百年校区祝福"` //名称
 	Description string `json:"description" form:"description" example:"介绍"`          //简介
 }
 
+// ParamCreatePost 创建版块请求multipart/form-data参数
 type ParamCreatePost struct {
-	TagId   int    `json:"tag_id" form:"tag_id" binding:"required"`
-	Title   string `json:"title" form:"title" binding:"required"`
-	Content string `json:"content" form:"content" binding:"required"`
+	TagId   int    `json:"tag_id" form:"tag_id" binding:"required" example:"2"`       //版块id
+	Title   string `json:"title" form:"title" binding:"required" example:"这是个标题"`     //标题
+	Content string `json:"content" form:"content" binding:"required" example:"杰哥不要啊"` //内容
 }
