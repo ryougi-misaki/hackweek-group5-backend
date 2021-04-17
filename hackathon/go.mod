@@ -13,7 +13,7 @@ require (
 	github.com/onsi/ginkgo v1.16.1 // indirect
 	github.com/onsi/gomega v1.11.0 // indirect
 	github.com/spf13/viper v1.7.1
-	github.com/streadway/amqp v1.0.0 // indirect
+	github.com/streadway/amqp v1.0.0
 	go.uber.org/zap v1.10.0
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	gorm.io/driver/mysql v1.0.5

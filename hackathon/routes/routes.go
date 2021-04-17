@@ -16,14 +16,14 @@ func Init() {
 	if port != "" {
 		panic(r.Run(":" + port))
 	}
-	panic(r.Run())
+	panic(r.Run(":8081"))
 }
 
 func CollectRoute(r *gin.Engine) *gin.Engine {
 	r.POST("api/auth/register", controller.Register)
 	r.POST("api/auth/login", controller.Login)
 	r.GET("api/auth/info", middleware.AuthMiddleware(), controller.Info)
-	r.GET("/ws" , controller.WebSocket)
-
+	r.GET("/ws/:id" , controller.WebSocket)
+	r.POST("/chat/history",controller.ChatHistory)
 	return r
 }

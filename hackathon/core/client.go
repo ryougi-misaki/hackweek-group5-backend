@@ -1,12 +1,12 @@
 package core
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"hackathon/rabbitMq"
 	"hackathon/variable"
-	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -18,6 +18,13 @@ type Client struct {
 	ReadDeadline       time.Duration
 	WriteDeadline      time.Duration
 	HeartbeatFailTimes int
+
+	//rabbitMq
+
+	Consume *rabbitMq.Consume
+
+	Producer *rabbitMq.Producer
+
 	// 自己的地址
 	ID interface{}
 	//用户的id
@@ -33,14 +40,11 @@ func (c *Client) OnOpen(context *gin.Context) (*Client, bool) {
 		err := recover()
 		if err != nil {
 
-			if val, ok := err.(error); ok {
-				fmt.Println(val)
+			if _, ok := err.(error); ok {
 			}
 
 		}
 	}()
-
-	fmt.Println("third")
 	var upGrader = websocket.Upgrader{
 		ReadBufferSize:  2000,
 		WriteBufferSize: 2000,
@@ -51,10 +55,8 @@ func (c *Client) OnOpen(context *gin.Context) (*Client, bool) {
 
 	// 2.将http协议升级到websocket协议.初始化一个有效的websocket长连接客户端
 	if wsConn, err := upGrader.Upgrade(context.Writer, context.Request, nil); err != nil {
-		fmt.Println("4")
 		return nil, false
 	} else {
-		fmt.Println(5)
 		if wsHub, ok := variable.WebsocketHub.(*Hub); ok {
 			c.Hub = wsHub
 		}
@@ -64,18 +66,22 @@ func (c *Client) OnOpen(context *gin.Context) (*Client, bool) {
 		c.ReadDeadline = time.Second * 0
 		c.WriteDeadline = time.Second * 35
 		c.ID = c
-		c.Uid = variable.TempId
-		variable.TempId++
-		if err := c.Conn.SetWriteDeadline(time.Now().Add(2 * time.Second)); err != nil {
-			log.Fatal(err.Error())
-		}
-		if err := c.Conn.WriteMessage(websocket.TextMessage, []byte(variable.WebsocketHandshakeSuccess)); err != nil {
-			log.Fatal(err.Error())
-		}
+		c.Uid, _ = strconv.Atoi(context.Param("id"))
+		c.Consume,_ = rabbitMq.CreateConsumer(strconv.Itoa(c.Uid))
+		c.Producer,_ = rabbitMq.CreateProducer(strconv.Itoa(c.Uid))
 		c.Conn.SetReadLimit(65535) // 设置最大读取长度
-		fmt.Println(6)
 		c.Hub.Register <- c
-		fmt.Println(7)
+
+		//注册后,收取积攒的消息
+
+		go c.Consume.Received(func(receivedData string) {
+
+			c.Conn.WriteMessage(websocket.TextMessage , []byte(receivedData))
+
+		})
+
+
+
 		return c, true
 	}
 

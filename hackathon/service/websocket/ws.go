@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"hackathon/core"
+	"hackathon/dao/mysql"
+	"hackathon/models"
 	"log"
 	"strconv"
 	"strings"
@@ -15,17 +17,6 @@ type Ws struct {
 	WsClient *core.Client
 }
 
-type Message struct {
-
-	from int
-
-	to int
-
-	message string
-
-}
-
-var Hub []Message
 
 
 // onOpen 基本不需要做什么
@@ -58,12 +49,8 @@ func (w *Ws) OnMessage(context *gin.Context) {
 		var Msg string
 		if err == nil {
 			Msg = Data[1]
-			message := Message{from: w.WsClient.Uid, to: To, message: Msg}
-			Hub = append(Hub, message)
 		}else{
 			To = w.WsClient.Uid
-			message := Message{from: w.WsClient.Uid , to: w.WsClient.Uid ,message: err.Error()}
-			Hub = append(Hub, message)
 			Msg = err.Error()
 		}
 
@@ -80,17 +67,24 @@ func (w *Ws) OnMessage(context *gin.Context) {
 		//
 		//}
 
-
-		fmt.Println("写入了信息")
+		fmt.Println(receivedData)
 		if _,ok := w.WsClient.Hub.ClientsId[To];ok {
-			err := w.WsClient.Hub.ClientsId[To].Conn.WriteMessage(messageType, []byte(Msg))
+
+			message :=models.ChatHistory{From: w.WsClient.Uid, To: To,Msg: Msg,CreatedAt: time.Now()}
+			mysql.Create(&message)
+			err := w.WsClient.Hub.ClientsId[To].Conn.WriteMessage(messageType, []byte(strconv.Itoa(w.WsClient.Uid)+":"+Msg))
 			if err != nil {
 
 				fmt.Println(err.Error())
 
 			}
 		}else {
-			w.WsClient.Conn.WriteMessage(messageType,[]byte("对方未上线"))
+
+			message :=models.ChatHistory{From: w.WsClient.Uid, To: To,Msg: Msg,CreatedAt: time.Now()}
+			mysql.Create(&message)
+
+			w.WsClient.Producer.Send(strconv.Itoa(To) , strconv.Itoa(w.WsClient.Uid)+":"+Msg)
+			w.WsClient.Producer.Close()
 		}
 
 	}, w.OnError, w.OnClose)

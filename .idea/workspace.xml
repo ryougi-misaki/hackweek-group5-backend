@@ -2,19 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fa8d9bed-83b0-4996-be9e-38054bd0f00c" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/hackathon/message_hub/message.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackathon/rabbitMq/comsume.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackathon/rabbitMq/producer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/config/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/config/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/controller/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/controller/ws.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/core/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/core/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/core/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/core/hub.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/dao/mysql/history.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/dao/mysql/history.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/dao/mysql/mysql.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/dao/mysql/mysql.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/models/ChatHistory.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/models/ChatHistory.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/rabbitMq/comsume.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/rabbitMq/comsume.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/rabbitMq/producer.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/rabbitMq/producer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/routes/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/routes/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/service/history.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/service/history.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/service/websocket/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/service/websocket/ws.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/util/randomName.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/util/randomName.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/variable/variable.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/variable/variable.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,13 +54,21 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../2021-Winter-Tieba-Group3" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build hackathon">
     <configuration name="go build hackathon" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="hackweek-group5-backend" />
       <working_directory value="$PROJECT_DIR$/hackathon" />
       <kind value="PACKAGE" />
       <filePath value="$PROJECT_DIR$/hackathon/main.go" />
       <package value="hackathon" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build producer.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="hackweek-group5-backend" />
+      <working_directory value="$PROJECT_DIR$/hackathon" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/hackathon/rabbitMq/producer.go" />
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
@@ -86,10 +95,14 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="561" y="266" key="#Go_Modules/0.0.1536.864@0.0.1536.864" timestamp="1618141001182" />
-    <state x="506" y="255" key="#Notifications" timestamp="1618230382817">
+    <state x="506" y="255" key="#Notifications" timestamp="1618645064817">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="506" y="255" key="#Notifications/0.0.1536.864@0.0.1536.864" timestamp="1618230382817" />
+    <state x="506" y="255" key="#Notifications/0.0.1536.864@0.0.1536.864" timestamp="1618645064817" />
+    <state x="604" y="233" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1618469007469">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="604" y="233" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.864@0.0.1536.864" timestamp="1618469007469" />
     <state x="561" y="291" key="#范围" timestamp="1618159390596">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -106,21 +119,45 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1618154588101" />
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1618372101266">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1618644335164">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1618372101266" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1618372101265">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1618644335164">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1618372101265" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1618372101265">
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1618644335164">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1618372101265" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1618372101266">
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1618644335164">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1618372101266" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
+    <state width="1493" height="277" key="GridCell.Tab.1.bottom" timestamp="1618643554262">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="277" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1618643554262" />
+    <state width="1493" height="277" key="GridCell.Tab.1.center" timestamp="1618643554262">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="277" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1618643554262" />
+    <state width="1493" height="277" key="GridCell.Tab.1.left" timestamp="1618643554262">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="277" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1618643554262" />
+    <state width="1493" height="277" key="GridCell.Tab.1.right" timestamp="1618643554262">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="277" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1618643554262" />
+    <state x="612" y="191" key="refactoring.ChangeSignatureDialog" timestamp="1618642306685">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="612" y="191" key="refactoring.ChangeSignatureDialog/0.0.1536.864@0.0.1536.864" timestamp="1618642306685" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1618621712861">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1618621712861" />
   </component>
 </project>

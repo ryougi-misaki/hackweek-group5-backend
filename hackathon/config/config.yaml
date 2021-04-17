@@ -1,12 +1,12 @@
 app:
   name: "web_app"
   mode: "dev"
-  port: 8081
+  port: 8082
 mysql:
   host: "127.0.0.1"
   port: 3306
   user: "root"
-  password: "54188a"
+  password: "lxy13607073088"
   dbname: "hackathon"
 redis:
   host: "127.0.0.1"

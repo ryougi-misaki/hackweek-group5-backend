@@ -7,7 +7,7 @@ import (
 )
 
 
-func CreateConsumer(QueueName string) (*consumer, error) {
+func CreateConsumer(QueueName string) (*Consume, error) {
 	// 获取配置信息
 	conn, err := amqp.Dial("amqp://guest:guest@127.0.0.1:5672")
 	queueName := QueueName
@@ -17,11 +17,11 @@ func CreateConsumer(QueueName string) (*consumer, error) {
 	retryTimes := 5
 
 	if err != nil {
-		//log.Println(err.Error())
+
 		fmt.Println(err.Error())
 		return nil, err
 	}
-	consumer := &consumer{
+	consumer := &Consume{
 		connect:                     conn,
 		queueName:                   queueName,
 		durable:                     dura,
@@ -34,7 +34,7 @@ func CreateConsumer(QueueName string) (*consumer, error) {
 }
 
 //  定义一个消息队列结构体：helloworld 模型
-type consumer struct {
+type Consume struct {
 	connect                     *amqp.Connection
 	queueName                   string
 	durable                     bool
@@ -48,7 +48,7 @@ type consumer struct {
 }
 
 // 接收、处理消息
-func (c *consumer) Received(callbackFunDealSmg func(receivedData string)) {
+func (c *Consume) Received(callbackFunDealSmg func(receivedData string)) {
 	defer func() {
 		_ = c.connect.Close()
 	}()
@@ -80,7 +80,7 @@ func (c *consumer) Received(callbackFunDealSmg func(receivedData string)) {
 				queue.Name,
 				queue.Name, //  消费者标记，请确保在一个消息频道唯一
 				true,       //是否自动响应确认
-				false,      //是否私有队列，false标识允许多个 consumer 向该队列投递消息，true 表示独占
+				false,      //是否私有队列，false标识允许多个 Consume 向该队列投递消息，true 表示独占
 				false,      //RabbitMQ不支持noLocal标志。
 				false,      // 队列如果已经在服务器声明，设置为 true ，否则设置为 false；
 				nil,
@@ -100,7 +100,7 @@ func (c *consumer) Received(callbackFunDealSmg func(receivedData string)) {
 }
 
 //消费者端，掉线重连监听器
-func (c *consumer) OnConnectionError(callbackOfflineErr func(err *amqp.Error)) {
+func (c *Consume) OnConnectionError(callbackOfflineErr func(err *amqp.Error)) {
 	c.callbackOffLine = callbackOfflineErr
 	go func() {
 		select {
