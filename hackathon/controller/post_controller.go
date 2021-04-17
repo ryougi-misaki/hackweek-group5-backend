@@ -16,9 +16,10 @@ import (
 // @Summary 创建版块接口
 // @Description 只有身份为管理员才能创建，传name和description 两个参数
 // @Tags 版块相关接口
-// @Accept multipart/form-data
+// @Accept application/json
 // @Produce application/json
-// @Param object formData models.ParamCreateTag false "参数"
+// @Param BearToken header string false "Bearer 用户令牌"
+// @Param object body models.ParamCreateTag false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/tag [post]
 func CreateTag(ctx *gin.Context) {
@@ -29,7 +30,7 @@ func CreateTag(ctx *gin.Context) {
 		return
 	}
 	p := new(models.ParamCreateTag)
-	if err := ctx.ShouldBind(p); err != nil {
+	if err := ctx.ShouldBindJSON(p); err != nil {
 		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
 		return
 	}
@@ -61,6 +62,7 @@ func RetrieveTags(ctx *gin.Context) {
 // @Tags 版块相关接口
 // @Accept application/json
 // @Produce application/json
+// @Param BearToken header string false "Bearer 用户令牌"
 // @Param id path int true "版块id"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/tag/{id} [delete]
@@ -105,7 +107,7 @@ func RetrievePost(ctx *gin.Context) {
 	fmt.Println(count.ID)
 	var post models.Post
 	for {
-		mysql.DB.Where("tag_id = ? AND id = ?", tagId, util.RandomNumber(1, int(count.ID))).Find(&post)
+		mysql.DB.Where("tag_id = ? AND id = ? AND status = ?", tagId, util.RandomNumber(1, int(count.ID)), 1).Find(&post)
 		if post.Content != "" {
 			break
 		}
@@ -117,14 +119,15 @@ func RetrievePost(ctx *gin.Context) {
 // @Summary 发贴接口
 // @Description 接收tag_id,title,content三个参数，需要token
 // @Tags 树洞相关接口
-// @Accept multipart/form-data
+// @Accept application/json
 // @Produce application/json
-// @Param object formData models.ParamCreatePost false "参数"
+// @Param BearToken header string false "Bearer 用户令牌"
+// @Param object body models.ParamCreatePost false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/post [post]
 func CreatePost(ctx *gin.Context) {
 	p := new(models.ParamCreatePost)
-	if err := ctx.ShouldBind(p); err != nil {
+	if err := ctx.ShouldBindJSON(p); err != nil {
 		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
 		return
 	}
@@ -143,7 +146,8 @@ func CreatePost(ctx *gin.Context) {
 // @Tags 树洞相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param object formData models.ParamCreatePost false "参数"
+// @Param BearToken header string false "Bearer 用户令牌"
+// @Param id path int true "版块id"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/post/{id} [delete]
 func DeletePost(ctx *gin.Context) {

@@ -15,14 +15,14 @@ import (
 // @Summary 注册接口
 // @Description 目前无短信验证，只需传name，telephone和password三个参数
 // @Tags 用户相关接口
-// @Accept multipart/form-data
+// @Accept application/json
 // @Produce application/json
-// @Param object formData models.ParamRegister false "参数"
+// @Param object body models.ParamRegister false "comment"
 // @Success 200 {object} response.ResponseData
 // @Router /register [post]
 func Register(ctx *gin.Context) {
 	p := new(models.ParamRegister)
-	if err := ctx.ShouldBind(p); err != nil {
+	if err := ctx.ShouldBindJSON(p); err != nil {
 		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
 		return
 	}
@@ -37,29 +37,29 @@ func Register(ctx *gin.Context) {
 
 // Login 登入接口
 // @Summary 登入接口
-// @Description 电话号码+密码登入，返回token
+// @Description 电话号码+密码登入，返回token,id
 // @Tags 用户相关接口
-// @Accept multipart/form-data
+// @Accept application/json
 // @Produce application/json
-// @Param object formData models.ParamLogin false "参数"
+// @Param object body models.ParamLogin false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /login [post]
 func Login(ctx *gin.Context) {
 	//获取参数
 	p := new(models.ParamLogin)
-	if err := ctx.ShouldBind(p); err != nil {
+	if err := ctx.ShouldBindJSON(p); err != nil {
 		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
 		return
 	}
 
 	//数据验证
-	token, code := service.Login(p)
+	token, id, code := service.Login(p)
 	if code != 0 {
 		response.Response(ctx, http.StatusOK, code, nil, response.GetErrMsg(code))
 		return
 	}
 	//返回结果
-	response.Success(ctx, gin.H{"token": token}, "登入成功")
+	response.Success(ctx, gin.H{"token": token, "id": id}, "登入成功")
 }
 
 // Info 查询用户信息接口
@@ -82,15 +82,15 @@ func Info(ctx *gin.Context) {
 // @Summary 编辑用户信息接口
 // @Description 提交表单，更新个人信息，需要token
 // @Tags 用户相关接口
-// @Accept multipart/form-data
+// @Accept application/json
 // @Produce application/json
 // @Param BearToken header string false "Bearer 用户令牌"
-// @Param object formData models.ParamEditInfo false "参数"
+// @Param object body models.ParamEditInfo false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/me [put]
 func EditInfo(ctx *gin.Context) {
 	p := new(models.ParamEditInfo)
-	if err := ctx.ShouldBind(p); err != nil {
+	if err := ctx.ShouldBindJSON(p); err != nil {
 		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
 		return
 	}
@@ -107,15 +107,15 @@ func EditInfo(ctx *gin.Context) {
 // @Summary 修改用户密码接口
 // @Description 提交表单，更新密码，需要token
 // @Tags 用户相关接口
-// @Accept multipart/form-data
+// @Accept application/json
 // @Produce application/json
 // @Param BearToken header string false "Bearer 用户令牌"
-// @Param object formData models.ParamChangePwd false "参数"
+// @Param object body models.ParamChangePwd false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/pwd [put]
 func ChangePwd(ctx *gin.Context) {
 	p := new(models.ParamChangePwd)
-	if err := ctx.ShouldBind(p); err != nil {
+	if err := ctx.ShouldBindJSON(p); err != nil {
 		response.Response(ctx, http.StatusOK, response.CodeParamError, nil, response.GetErrMsg(response.CodeParamError))
 		return
 	}

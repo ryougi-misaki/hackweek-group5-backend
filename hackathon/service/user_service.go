@@ -48,24 +48,24 @@ func Register(p *models.ParamRegister) int {
 	return response.OK
 }
 
-func Login(p *models.ParamLogin) (string, int) {
+func Login(p *models.ParamLogin) (string, uint, int) {
 	//手机号是否存在
 	DB := mysql.GetDB()
 	var user models.User
 	DB.Where("telephone = ?", p.Telephone).First(&user)
 	if user.ID == 0 {
-		return "", response.CodeUserNotExist
+		return "", 0, response.CodeUserNotExist
 	}
 	//判断密码是否正确
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(p.Password)); err != nil {
-		return "", response.CodePwdWrong
+		return "", 0, response.CodePwdWrong
 	}
 	//发放token
 	token, err := util.ReleaseToken(user)
 	if err != nil {
-		return "", response.Error
+		return "", 0, response.Error
 	}
-	return token, response.OK
+	return token, user.ID, response.OK
 }
 
 func EditInfo(p *models.ParamEditInfo, id uint) int {

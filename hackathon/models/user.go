@@ -24,6 +24,7 @@ type UserDto struct {
 	Description string `json:"description"`
 	Gender      string `json:"gender"`
 	Birth       string `json:"birth"`
+	Role        int    `json:"role"`
 }
 
 func ToUserDto(user User) UserDto {
@@ -35,5 +36,6 @@ func ToUserDto(user User) UserDto {
 		Description: user.Description,
 		Gender:      user.Gender,
 		Birth:       user.Birth,
+		Role:        user.Role,
 	}
 }

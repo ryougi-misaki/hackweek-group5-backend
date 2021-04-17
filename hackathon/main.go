@@ -8,7 +8,7 @@ import (
 	"hackathon/routes"
 )
 
-// @title UShare接口文档
+// @title U Tree接口文档
 // @version 1.0
 // @description test
 

@@ -16,4 +16,5 @@ type Post struct {
 	TagId   uint   `gorm:"type:bigint unsigned;not null"`
 	Title   string `gorm:"type:varchar(20);collate:utf8mb4_unicode_ci"`
 	Content string `gorm:"type:longtext;collate:utf8mb4_unicode_ci"`
+	Status  int    `gorm:"type:int"` //空：未审核，1：通过审核，2，审核未通过
 }

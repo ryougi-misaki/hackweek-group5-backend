@@ -42,13 +42,6 @@ func RetrieveByID(data interface{}, id uint) {
 	return
 }
 
-//tar为约束条件结构体，根据tar查第一个符合条件的data
-//date必须传入引用，用于接收数据
-func RetrieveByStruct(data interface{}, tar interface{}) {
-	DB.Where(tar).First(data)
-	return
-}
-
 //tar为约束条件结构体，根据tar查符合条件的所有data
 //date必须传入引用，用于接收数据
 func RetrieveArrByStruct(data interface{}, tar interface{}) {
