@@ -8,6 +8,14 @@ import (
 	"hackathon/routes"
 )
 
+// @title U Tree接口文档
+// @version 1.0
+// @description test
+
+// @license.name Apache 2.0
+
+// @host 116.62.185.115:8081
+// @BasePath /api
 func main() {
 	err := config.Init()
 	if err != nil {
