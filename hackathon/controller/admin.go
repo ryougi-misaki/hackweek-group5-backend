@@ -11,11 +11,11 @@ import (
 
 // ShowAllPosts 查询帖子接口
 // @Summary 查询帖子接口
-// @Description 查询出所有状态的帖子,只有管理员有权限调，需要token
+// @Description 查询出未审核的帖子,只有管理员有权限调，需要token
 // @Tags 管理员相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param BearToken header string false "Bearer 用户令牌"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Success 200 {object} response.ResponseData
 // @Router /admin/posts [get]
 func ShowAllPosts(ctx *gin.Context) {
@@ -24,8 +24,8 @@ func ShowAllPosts(ctx *gin.Context) {
 		response.Response(ctx, http.StatusOK, response.Error, nil, "不是管理员，权限不足")
 		return
 	}
-	var posts []models.Post
-	mysql.RetrieveArrByStruct(&posts, models.Tag{})
+	posts := []models.Post{}
+	mysql.GetDB().Where("status = ?", 0).Find(&posts)
 	response.Success(ctx, gin.H{"posts": posts}, "查询成功")
 }
 
@@ -35,7 +35,7 @@ func ShowAllPosts(ctx *gin.Context) {
 // @Tags 管理员相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param BearToken header string false "Bearer 用户令牌"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path int true "帖子id"
 // @Param status path int true "状态"
 // @Success 200 {object} response.ResponseData

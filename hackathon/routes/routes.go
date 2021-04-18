@@ -42,10 +42,17 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	r.GET("api/post/:id", controller.RetrievePost)
 	r.POST("api/auth/post", middleware.AuthMiddleware(), controller.CreatePost)
 	r.DELETE("api/auth/post/:id", middleware.AuthMiddleware(), controller.DeletePost)
+	r.GET("api/auth/myposts", middleware.AuthMiddleware(), controller.ShowMyPosts)
 
 	//管理员
 	r.GET("api/admin/posts", middleware.AuthMiddleware(), controller.ShowAllPosts)
 	r.PUT("api/admin/post/:id/:status", middleware.AuthMiddleware(), controller.UpdatePostStatus)
+
+	//聊天列表
+	r.GET("api/auth/chats", middleware.AuthMiddleware(), controller.ShowMyChats)
+	r.POST("api/auth/chat", middleware.AuthMiddleware(), controller.AddChatRecord)
+	r.DELETE("api/auth/chat/:id", middleware.AuthMiddleware(), controller.DeleteChatRecord)
+	r.PUT("api/auth/chat/:id/:is_top", middleware.AuthMiddleware(), controller.IsTop)
 
 	return r
 }

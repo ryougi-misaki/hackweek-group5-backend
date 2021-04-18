@@ -16,7 +16,7 @@ func Init() error {
 		panic("failed to connect database")
 		return err
 	}
-	err = DB.AutoMigrate(&models.User{}, &models.Tag{}, &models.Post{})
+	err = DB.AutoMigrate(&models.User{}, &models.Tag{}, &models.Post{}, &models.ChatRecord{})
 	if err != nil {
 		return err
 	}

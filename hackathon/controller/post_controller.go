@@ -18,7 +18,7 @@ import (
 // @Tags 版块相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param BearToken header string false "Bearer 用户令牌"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Param object body models.ParamCreateTag false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/tag [post]
@@ -62,7 +62,7 @@ func RetrieveTags(ctx *gin.Context) {
 // @Tags 版块相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param BearToken header string false "Bearer 用户令牌"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path int true "版块id"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/tag/{id} [delete]
@@ -121,7 +121,7 @@ func RetrievePost(ctx *gin.Context) {
 // @Tags 树洞相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param BearToken header string false "Bearer 用户令牌"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Param object body models.ParamCreatePost false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/post [post]
@@ -166,4 +166,20 @@ func DeletePost(ctx *gin.Context) {
 		return
 	}
 	response.Success(ctx, gin.H{"post": post}, "删除成功")
+}
+
+// DeletePost 查帖接口
+// @Summary 查贴接口
+// @Description 查询出个人发布过的所有帖子，需要token
+// @Tags 树洞相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Success 200 {object} response.ResponseData
+// @Router /auth/myposts [get]
+func ShowMyPosts(ctx *gin.Context) {
+	user, _ := ctx.Get("user")
+	posts := []models.Post{}
+	mysql.GetDB().Where("user_id = ?", user.(models.User).ID).Find(&posts)
+	response.Success(ctx, gin.H{"posts": posts}, "查询成功")
 }
