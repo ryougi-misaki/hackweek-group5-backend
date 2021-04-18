@@ -1,7 +1,6 @@
-app:
-  name: "web_app"
-  mode: "dev"
-  port: 8081
+name: "web_app"
+mode: "dev"
+port: 8081
 mysql:
   host: "127.0.0.1"
   port: 3306
@@ -10,7 +9,7 @@ mysql:
   dbname: "hackathon"
 redis:
   host: "127.0.0.1"
-  port: 16379
+  port: 6379
   db: 0
   password: ""
 #log:

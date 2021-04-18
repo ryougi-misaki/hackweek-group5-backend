@@ -16,7 +16,7 @@ func Init() error {
 		panic("failed to connect database")
 		return err
 	}
-	err = DB.AutoMigrate(&models.User{})
+	err = DB.AutoMigrate(&models.User{}, &models.Tag{}, &models.Post{}, &models.ChatRecord{})
 	if err != nil {
 		return err
 	}
@@ -39,13 +39,6 @@ func Create(new interface{}) error {
 //date必须传入引用，用于接收数据
 func RetrieveByID(data interface{}, id uint) {
 	DB.First(data, id)
-	return
-}
-
-//tar为约束条件结构体，根据tar查第一个符合条件的data
-//date必须传入引用，用于接收数据
-func RetrieveByStruct(data interface{}, tar interface{}) {
-	DB.Where(tar).First(data)
 	return
 }
 

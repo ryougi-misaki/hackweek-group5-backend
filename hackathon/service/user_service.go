@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"hackathon/dao/mysql"
 	"hackathon/models"
@@ -47,23 +48,60 @@ func Register(p *models.ParamRegister) int {
 	return response.OK
 }
 
-func Login(p *models.ParamLogin) (string, int) {
+func Login(p *models.ParamLogin) (string, uint, int) {
 	//手机号是否存在
 	DB := mysql.GetDB()
 	var user models.User
 	DB.Where("telephone = ?", p.Telephone).First(&user)
 	if user.ID == 0 {
-
-		return "", response.CodePhoneExist
+		return "", 0, response.CodeUserNotExist
 	}
 	//判断密码是否正确
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(p.Password)); err != nil {
-		return "", response.CodePwdWrong
+		return "", 0, response.CodePwdWrong
 	}
 	//发放token
 	token, err := util.ReleaseToken(user)
 	if err != nil {
-		return "", response.Error
+		return "", 0, response.Error
 	}
-	return token, response.OK
+	return token, user.ID, response.OK
+}
+
+func EditInfo(p *models.ParamEditInfo, id uint) int {
+	tarData := &models.User{}
+	tarData.ID = id
+	updateData := &models.User{
+		Name:        p.Name,
+		Icon:        p.Icon,
+		Description: p.Description,
+		Gender:      p.Gender,
+		Birth:       p.Birth,
+	}
+	err := mysql.Update(tarData, updateData)
+	if err != nil {
+		fmt.Println(err)
+		return response.CodeServerBusy
+	}
+	return response.OK
+}
+
+func ChangePwd(p *models.ParamChangePwd, id uint) int {
+	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(p.NewPassword), bcrypt.DefaultCost)
+	if err != nil {
+		//response.Response(ctx,http.StatusUnprocessableEntity,422,nil,"加密错误")
+		return response.CodeEncryptError
+	}
+
+	tarData := &models.User{}
+	tarData.ID = id
+	updateData := &models.User{
+		Password: string(hasedPassword),
+	}
+	err = mysql.Update(tarData, updateData)
+	if err != nil {
+		fmt.Println(err)
+		return response.CodeServerBusy
+	}
+	return response.OK
 }

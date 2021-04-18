@@ -10,12 +10,9 @@ import (
 var Conf = new(AppConfig)
 
 type AppConfig struct {
-	Name      string `mapstructure:"name"`
-	Mode      string `mapstructure:"mode"`
-	Version   string `mapstructure:"version"`
-	StartTime string `mapstructure:"start_time"`
-	MachineID int64  `mapstructure:"machine_id"`
-	Port      int    `mapstructure:"port"`
+	Name string `mapstructure:"name"`
+	Mode string `mapstructure:"mode"`
+	Port int    `mapstructure:"port"`
 
 	*MySQLConfig `mapstructure:"mysql"`
 	*RedisConfig `mapstructure:"redis"`
@@ -67,6 +64,6 @@ func Init() (err error) {
 
 func ReturnMySQLsetting(cfg *MySQLConfig) string {
 	// "user:password@tcp(host:port)/dbname"
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true&loc=Local", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=true&loc=Local", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
 	return dsn
 }

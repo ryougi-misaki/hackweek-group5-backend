@@ -1,27 +1,58 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
+	gs "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"hackathon/config"
 	"hackathon/controller"
+	_ "hackathon/docs"
 	"hackathon/middleware"
+	"io"
+	"os"
 )
 
 func Init() {
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	r := gin.Default()
 	r.Use(cors.Default())
 	r = CollectRoute(r)
-	port := viper.GetString("server.port")
-	if port != "" {
-		panic(r.Run(":" + port))
-	}
-	panic(r.Run())
+	panic(r.Run(fmt.Sprintf(":%d", config.Conf.Port)))
 }
 
 func CollectRoute(r *gin.Engine) *gin.Engine {
-	r.POST("api/auth/register", controller.Register)
-	r.POST("api/auth/login", controller.Login)
-	r.GET("api/auth/info", middleware.AuthMiddleware(), controller.Info)
+	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
+
+	//用户
+	r.POST("api/register", controller.Register)
+	r.POST("api/login", controller.Login)
+	r.GET("api/info/:id", controller.Info)
+	r.PUT("api/auth/me", middleware.AuthMiddleware(), controller.EditInfo)
+	r.PUT("api/auth/pwd", middleware.AuthMiddleware(), controller.ChangePwd)
+
+	//版块
+	r.GET("api/tags", controller.RetrieveTags)
+	r.POST("api/auth/tag", middleware.AuthMiddleware(), controller.CreateTag)
+	r.DELETE("api/auth/tag/:id", middleware.AuthMiddleware(), controller.DeleteTag)
+
+	//树洞
+	r.GET("api/post/:id", controller.RetrievePost)
+	r.POST("api/auth/post", middleware.AuthMiddleware(), controller.CreatePost)
+	r.DELETE("api/auth/post/:id", middleware.AuthMiddleware(), controller.DeletePost)
+	r.GET("api/auth/myposts", middleware.AuthMiddleware(), controller.ShowMyPosts)
+
+	//管理员
+	r.GET("api/admin/posts", middleware.AuthMiddleware(), controller.ShowAllPosts)
+	r.PUT("api/admin/post/:id/:status", middleware.AuthMiddleware(), controller.UpdatePostStatus)
+
+	//聊天列表
+	r.GET("api/auth/chats", middleware.AuthMiddleware(), controller.ShowMyChats)
+	r.POST("api/auth/chat", middleware.AuthMiddleware(), controller.AddChatRecord)
+	r.DELETE("api/auth/chat/:id", middleware.AuthMiddleware(), controller.DeleteChatRecord)
+	r.PUT("api/auth/chat/:id/:is_top", middleware.AuthMiddleware(), controller.IsTop)
+
 	return r
 }
