@@ -1,7 +1,5 @@
 package core
 
-import "fmt"
-
 type Message struct {
 	from int
 
@@ -37,7 +35,6 @@ func (h *Hub) Run() {
 		case client := <-h.Register:
 			h.Clients[client] = true
 			h.ClientsId[client.Uid] = client
-			fmt.Println(client)
 		case client := <-h.UnRegister:
 			if _, ok := h.Clients[client]; ok {
 				_ = client.Conn.Close()

@@ -9,3 +9,4 @@ type ChatHistory struct {
 	To        int       `json:"to" form:"to"`
 	Msg       string    `json:"msg" form:"msg"`
 }
+

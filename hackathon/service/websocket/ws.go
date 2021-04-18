@@ -21,7 +21,6 @@ type Ws struct {
 
 // onOpen 基本不需要做什么
 func (w *Ws) OnOpen(context *gin.Context) (*Ws, bool) {
-	fmt.Println("on first")
 	if client, ok := (&core.Client{}).OnOpen(context); ok {
 		w.WsClient = client
 		go w.WsClient.Heartbeat(w.OnClose) // 一旦握手+协议升级成功，就为每一个连接开启一个自动化的隐式心跳检测包
@@ -66,8 +65,6 @@ func (w *Ws) OnMessage(context *gin.Context) {
 		//
 		//
 		//}
-
-		fmt.Println(receivedData)
 		if _,ok := w.WsClient.Hub.ClientsId[To];ok {
 
 			message :=models.ChatHistory{From: w.WsClient.Uid, To: To,Msg: Msg,CreatedAt: time.Now()}

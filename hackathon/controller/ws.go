@@ -58,12 +58,6 @@ func ChatHistory(ctx *gin.Context){
 	})
 
 
-
-
-
-
-
-
 }
 
 

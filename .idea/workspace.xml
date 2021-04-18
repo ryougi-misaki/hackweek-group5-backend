@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:TempTest" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="fa8d9bed-83b0-4996-be9e-38054bd0f00c" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021_4_17_20_51_[默认更改列表]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021_4_17_20_51_[默认更改列表]1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021_4_17_20_51___.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hackathon/hackathon" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/config/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/config/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/controller/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/controller/ws.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/core/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/core/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/dao/mysql/history.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/dao/mysql/history.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/dao/mysql/mysql.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/dao/mysql/mysql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackathon/core/hub.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/core/hub.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/models/ChatHistory.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/models/ChatHistory.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/rabbitMq/comsume.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/rabbitMq/comsume.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/rabbitMq/producer.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/rabbitMq/producer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/routes/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/routes/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackathon/service/history.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/service/history.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackathon/service/websocket/ws.go" beforeDir="false" afterPath="$PROJECT_DIR$/hackathon/service/websocket/ws.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,6 +108,18 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
     <environment>
@@ -115,26 +153,26 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="668" y="292" key="EnvironmentVariablesDialog/0.0.1536.864@0.0.1536.864" timestamp="1618141000495" />
-    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1618154588101">
+    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1618669632432">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1618154588101" />
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1618644335164">
+    <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1618669632432" />
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1618678355908">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1618644335164">
+    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1618678355908" />
+    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1618678355907">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1618644335164">
+    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1618678355907" />
+    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1618678355907">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1618644335164">
+    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1618678355907" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1618678355908">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1618644335164" />
+    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1618678355908" />
     <state width="1493" height="277" key="GridCell.Tab.1.bottom" timestamp="1618643554262">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -151,6 +189,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state width="1493" height="277" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1618643554262" />
+    <state x="529" y="144" key="git4idea.branch.GitSmartOperationDialog" timestamp="1618704409402">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="529" y="144" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.864@0.0.1536.864" timestamp="1618704409402" />
     <state x="612" y="191" key="refactoring.ChangeSignatureDialog" timestamp="1618642306685">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
