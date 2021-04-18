@@ -84,7 +84,7 @@ func Info(ctx *gin.Context) {
 // @Tags 用户相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param BearToken header string false "Bearer 用户令牌"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Param object body models.ParamEditInfo false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/me [put]
@@ -109,7 +109,7 @@ func EditInfo(ctx *gin.Context) {
 // @Tags 用户相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param BearToken header string false "Bearer 用户令牌"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Param object body models.ParamChangePwd false "参数"
 // @Success 200 {object} response.ResponseData
 // @Router /auth/pwd [put]

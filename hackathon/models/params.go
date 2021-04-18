@@ -40,3 +40,8 @@ type ParamCreatePost struct {
 	Title   string `json:"title" form:"title" binding:"required" example:"这是个标题"`     //标题
 	Content string `json:"content" form:"content" binding:"required" example:"杰哥不要啊"` //内容
 }
+
+type ParamAddChatRecord struct {
+	FromId  int    `json:"from_id" form:"from_id" binding:"required"`   //聊天对象id
+	LastMsg string `json:"last_msg" form:"last_msg" binging:"required"` //最后一条聊天记录
+}

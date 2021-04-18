@@ -25,6 +25,7 @@ func CreatePost(p *models.ParamCreatePost, id uint) int {
 		TagId:   uint(p.TagId),
 		Title:   p.Title,
 		Content: p.Content,
+		Status:  0,
 	}
 	err := mysql.Create(newPost)
 	if err != nil {
